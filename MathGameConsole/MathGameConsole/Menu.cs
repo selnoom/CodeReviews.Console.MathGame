@@ -9,6 +9,8 @@ internal class Menu
         string userChoice;
         bool gameOn = true;
 
+        GameEngine gameEngine = new GameEngine();
+
         Console.WriteLine($"Hello {userName}! Today is {DateTime.UtcNow}. Would you like to play?");
 
         do
@@ -25,11 +27,12 @@ internal class Menu
             Console.WriteLine("-----------------------------");
 
             userChoice = Helper.GetNonEmptyString();
+            Console.Clear();
 
             switch (userChoice.ToLower())
             {
                 case "a":
-
+                    gameEngine.AdditionGame();
                     break;
 
                 case "s":
