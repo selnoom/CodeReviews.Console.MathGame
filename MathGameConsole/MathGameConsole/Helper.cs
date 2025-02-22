@@ -18,15 +18,30 @@ internal static class Helper
         return name;
     }
 
-    internal static bool checkUserAnswer(int result)
+    internal static bool CheckUserAnswer(int result)
     {
-        int userAnswer; 
+        int userAnswer;
         while (!int.TryParse(Console.ReadLine(), out userAnswer))
         {
-            Console.Clear();
-            Console.WriteLine("Invalid input. Please try again.");
+            PrintInvalidInput();
         }
         return userAnswer == result;
+    }
+
+    internal static int ValidateDifficulty()
+    {
+        int input;
+        while (!int.TryParse(Console.ReadLine(), out input) || input < 0 || input >3)
+        {
+            PrintInvalidInput();
+        }
+        return input;
+    }
+
+    internal static void PrintInvalidInput()
+    {
+        Console.Clear();
+        Console.WriteLine("Invalid input. Please try again.");
     }
 
     internal static void TypeKeyToContinue()
@@ -93,6 +108,43 @@ internal static class Helper
         }
     }
 
+    internal static int GetRounds()
+    {
+        Console.WriteLine("Please select a difficulty:\n" +
+            "1 - Easy:\t3 rounds\n" +
+            "2 - Normal:\t5 rounds\n" +
+            "3 - Hard:\t8 rounds\n");
+
+        int difficulty = ValidateDifficulty();
+
+        switch (difficulty)
+        {
+            case 1:
+                return 3;
+            case 2:
+                return 5;
+            case 3:
+                return 8;
+            default:
+                return 3;
+        }
+    }
+
+    internal static Difficulty GetDifficulty(int rounds)
+    {
+        switch (rounds)
+        {
+            case 3:
+                return Difficulty.Easy;
+            case 5:
+                return Difficulty.Normal;
+            case 8:
+                return Difficulty.Hard;
+            default:
+                return Difficulty.Easy;
+        }
+    }
+
     internal static void ShowGameHistory()
     {
         if (games.Count() > 0)
@@ -101,7 +153,7 @@ internal static class Helper
             Console.WriteLine("Game History:\n");
             foreach (Game game in games)
             {
-                Console.WriteLine($"{game.Date}\t{game.Type}\t{game.Score}");
+                Console.WriteLine($"Time: {game.Date}\tOperation:{game.Type}\tSocre:{game.Score}\tDifficulty:{game.Difficulty}");
             }
         }
         else
@@ -112,13 +164,14 @@ internal static class Helper
         Console.Clear();
     }
 
-    internal static void AddGameToHistory(DateTime time, int score, string type)
+    internal static void AddGameToHistory(DateTime time, int score, string type, Difficulty difficulty)
     {
         games.Add(new Game
         {
             Date = time,
             Score = score,
-            Type = type
+            Type = type,
+            Difficulty = difficulty
         });
     }
 }

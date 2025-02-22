@@ -8,6 +8,7 @@ internal class Menu
     {
         string userChoice;
         bool gameOn = true;
+        int rounds = 3;
 
         GameEngine gameEngine = new GameEngine();
 
@@ -22,6 +23,7 @@ internal class Menu
                 "S - Subtraction\n" +
                 "M - Multiplication\n" +
                 "D - Division\n" +
+                "C - Choose difficulty\n" +
                 "H - View game history\n" +
                 "Q - Quit the game\n");
             Console.WriteLine("-----------------------------");
@@ -32,16 +34,19 @@ internal class Menu
             switch (userChoice.ToLower())
             {
                 case "a":
-                    gameEngine.PlayGame(Operation.Addition);
+                    gameEngine.PlayGame(Operation.Addition, rounds);
                     break;
                 case "s":
-                    gameEngine.PlayGame(Operation.Subtraction);
+                    gameEngine.PlayGame(Operation.Subtraction, rounds);
                     break;
                 case "m":
-                    gameEngine.PlayGame(Operation.Multiplication);
+                    gameEngine.PlayGame(Operation.Multiplication, rounds);
                     break;
                 case "d":
-                    gameEngine.PlayGame(Operation.Division);
+                    gameEngine.PlayGame(Operation.Division, rounds);
+                    break;
+                case "c":
+                    rounds = Helper.GetRounds();
                     break;
                 case "h":
                     Helper.ShowGameHistory();

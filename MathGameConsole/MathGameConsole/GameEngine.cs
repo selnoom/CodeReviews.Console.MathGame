@@ -3,9 +3,10 @@
 {
     internal class GameEngine
     {
-        internal void PlayGame(Operation operation)
+        internal void PlayGame(Operation operation, int rounds)
         {
             string symbol = OperationSymbols.GetSymbol(operation);
+            Difficulty difficulty = Helper.GetDifficulty(rounds);
             int score = 0;
             int num1;
             int num2;
@@ -15,7 +16,7 @@
 
             Console.WriteLine($"Welcome to the {operation.ToString()} game!");
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < rounds; i++)
             {
                 if (operation != Operation.Division)
                 {
@@ -32,20 +33,20 @@
                 }
 
                 Console.WriteLine($"What is {num1} {symbol} {num2}?");
-                if (Helper.checkUserAnswer(result))
+                if (Helper.CheckUserAnswer(result))
                 {
                     score += 1;
-                    Console.WriteLine("Correct! Here are the next numbers.");
+                    Console.WriteLine("Correct!\n");
                 }
                 else
                 {
-                    Console.WriteLine("Incorrect :(\n Try again with the next numbers.");
+                    Console.WriteLine("Incorrect :(\n");
                 }
                 Helper.TypeKeyToContinue();
             }
-            Helper.AddGameToHistory(DateTime.UtcNow, score, operation.ToString());
+            Helper.AddGameToHistory(DateTime.UtcNow, score, operation.ToString(), Helper.GetDifficulty(rounds));
             Console.Clear();
-            Console.WriteLine($"You made a total of {score} points!\n");
+            Console.WriteLine($"You made a total of {score} points on {difficulty} mode!\n");
             Helper.TypeKeyToContinue();
         }
     }
