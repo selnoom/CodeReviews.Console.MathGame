@@ -7,13 +7,11 @@ namespace MathGameConsole
     {
         internal void PlayGame(Operation operation, int rounds, bool isRandom = false)
         {
-            // 1. Prepare common stuff
             Difficulty difficulty = Helper.GetDifficulty(rounds);
             Stopwatch stopwatch = new Stopwatch();
             Random random = new Random();
             int score = 0;
 
-            // 2. Print different “welcome” text depending on isRandom
             if (isRandom)
             {
                 Console.WriteLine($"Welcome to the Random game! All operations can appear!");
@@ -26,16 +24,12 @@ namespace MathGameConsole
 
             stopwatch.Start();
 
-            // 3. Loop for the rounds
             for (int i = 0; i < rounds; i++)
             {
-                // If random, pick a random operation each iteration;
-                // otherwise, use the operation passed in
                 Operation chosenOp = isRandom
                     ? Helper.GetRandomOperation()
                     : operation;
 
-                // Now everything below is the same
                 string symbol = OperationSymbols.GetSymbol(chosenOp);
 
                 int num1;
@@ -47,7 +41,6 @@ namespace MathGameConsole
                 }
                 else
                 {
-                    // Special logic for division
                     int[] divisionNumbers = Helper.GetDivisionNumbers();
                     num1 = divisionNumbers[0];
                     num2 = divisionNumbers[1];
@@ -70,7 +63,6 @@ namespace MathGameConsole
                 Helper.TypeKeyToContinue();
             }
 
-            // 4. Add to history and display final stats
             string gameName = isRandom ? "Random" : operation.ToString();
             Helper.AddGameToHistory(DateTime.UtcNow, score, gameName, difficulty, stopwatch.Elapsed.TotalSeconds);
 
