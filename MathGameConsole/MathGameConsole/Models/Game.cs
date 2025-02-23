@@ -6,4 +6,6 @@ class Game
     public int Score { get; set; }
     public string Type { get; set; }
     public Difficulty Difficulty { get; set; } = Difficulty.Easy;
+
+    public double Duration { get; set; }
 }

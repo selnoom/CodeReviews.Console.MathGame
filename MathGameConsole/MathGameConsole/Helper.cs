@@ -108,6 +108,18 @@ internal static class Helper
         }
     }
 
+    internal static Operation GetRandomOperation()
+    {
+        Random random = new Random();
+
+        var operations = (Operation[])Enum.GetValues(typeof(Operation));
+
+        int index = random.Next(operations.Length);
+
+        return operations[index];
+    }
+    
+
     internal static int GetRounds()
     {
         Console.WriteLine("Please select a difficulty:\n" +
@@ -116,6 +128,8 @@ internal static class Helper
             "3 - Hard:\t8 rounds\n");
 
         int difficulty = ValidateDifficulty();
+
+        Console.Clear();
 
         switch (difficulty)
         {
@@ -153,7 +167,7 @@ internal static class Helper
             Console.WriteLine("Game History:\n");
             foreach (Game game in games)
             {
-                Console.WriteLine($"Time: {game.Date}\tOperation:{game.Type}\tSocre:{game.Score}\tDifficulty:{game.Difficulty}");
+                Console.WriteLine($"Date: {game.Date}\tGame: {game.Type}\tScore: {game.Score}\tDifficulty: {game.Difficulty}\tElapsed time: {game.Duration:F2} seconds");
             }
         }
         else
@@ -164,14 +178,15 @@ internal static class Helper
         Console.Clear();
     }
 
-    internal static void AddGameToHistory(DateTime time, int score, string type, Difficulty difficulty)
+    internal static void AddGameToHistory(DateTime time, int score, string type, Difficulty difficulty, double duration)
     {
         games.Add(new Game
         {
             Date = time,
             Score = score,
             Type = type,
-            Difficulty = difficulty
+            Difficulty = difficulty,
+            Duration = duration
         });
     }
 }

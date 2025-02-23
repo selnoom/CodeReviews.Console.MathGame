@@ -22,7 +22,8 @@ internal class Menu
                 "A - Addition\n" +
                 "S - Subtraction\n" +
                 "M - Multiplication\n" +
-                "D - Division\n" +
+                "D - Division\n" + 
+                "R - Random\n" +
                 "C - Choose difficulty\n" +
                 "H - View game history\n" +
                 "Q - Quit the game\n");
@@ -44,6 +45,9 @@ internal class Menu
                     break;
                 case "d":
                     gameEngine.PlayGame(Operation.Division, rounds);
+                    break;
+                case "r":
+                    gameEngine.PlayGame(Operation.Addition, rounds, true);
                     break;
                 case "c":
                     rounds = Helper.GetRounds();
